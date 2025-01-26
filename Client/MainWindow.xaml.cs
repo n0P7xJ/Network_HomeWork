@@ -30,6 +30,7 @@ namespace Network_HomeWork_1
 
         private async void SendButton_Click(object sender, RoutedEventArgs e)
         {
+            // Отримуєм дані серверу, та юзера (ім'я та повідомлення)
             string ip = IpTextBox.Text;
             string portText = PortTextBox.Text;
             string message = MessageTextBox.Text;
@@ -50,11 +51,11 @@ namespace Network_HomeWork_1
 
             try
             {
-                IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
+                IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse(ip), port); // створюєм адрус відправки
 
-                using (Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+                using (Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)) // настроюєм 
                 {
-                    await server.ConnectAsync(serverEndPoint);
+                    await server.ConnectAsync(serverEndPoint); // провірка приєднання
                     Console.WriteLine("Connected to server.");
 
                     // Відправляємо повідомлення з ім'ям користувача

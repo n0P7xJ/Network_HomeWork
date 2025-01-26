@@ -12,7 +12,7 @@ class Server
         IPAddress serverIP = GetServerIP();
         int serverPort = GetServerPort();
 
-        await RunServerAsync(serverIP, serverPort);
+        await RunServerAsync(serverIP, serverPort); // запускаєм сервер для прийома повідомлень
     }
     private static IPAddress GetServerIP()
     {
@@ -79,14 +79,17 @@ class Server
     {
         try
         {
-            byte[] buffer = new byte[1024];
+            // виділяєм пам'ять для повідомлення
+            byte[] buffer = new byte[1024]; 
             int bytesRead;
 
-            while ((bytesRead = await client.ReceiveAsync(buffer, SocketFlags.None)) > 0)
+            while ((bytesRead = await client.ReceiveAsync(buffer, SocketFlags.None)) > 0) // очікуєм повідомлення
             {
+                //Відображаєм його
                 string message = Encoding.Unicode.GetString(buffer, 0, bytesRead);
                 WriteLine($"USER:{message}");
 
+                //Робим відповідь
                 byte[] responseData = Encoding.Unicode.GetBytes(message);
                 await client.SendAsync(responseData, SocketFlags.None);
             }
